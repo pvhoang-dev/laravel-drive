@@ -10,7 +10,7 @@ import NavLink from "@/Components/NavLink.vue";
 <template>
     <nav class="w-[300px]">
         <div class="h-[80px] px-3 flex items-center gap-3">
-            <Link :href="route('dashboard')">
+            <Link :href="route('myFiles')">
                 <ApplicationLogo
                     class="block h-9 w-auto fill-current text-gray-800"
                 />
@@ -21,9 +21,33 @@ import NavLink from "@/Components/NavLink.vue";
             <CreateNewDropdown></CreateNewDropdown>
 
             <div class="py-3">
-                <NavLink href="/1"> My Files </NavLink>
-                <NavLink href="/1" :active="true"> Shared with Me </NavLink>
-                <NavLink href="/1"> Starred Files </NavLink>
+                <NavLink
+                    :href="route('myFiles')"
+                    :active="$page.url === '/my-files'"
+                >
+                    My Files
+                </NavLink>
+
+                <NavLink
+                    :href="route('sharedWithMe')"
+                    :active="$page.url === '/shared-with-me'"
+                >
+                    Shared with Me
+                </NavLink>
+
+                <NavLink
+                    :href="route('sharedByMe')"
+                    :active="$page.url === '/shared-by-me'"
+                >
+                    Shared by Me
+                </NavLink>
+
+                <NavLink
+                    :href="route('trash')"
+                    :active="$page.url === '/trash'"
+                >
+                    Trash
+                </NavLink>
             </div>
         </div>
     </nav>
