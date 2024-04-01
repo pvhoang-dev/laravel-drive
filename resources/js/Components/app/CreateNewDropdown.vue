@@ -1,6 +1,12 @@
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/vue";
-import { ChevronDownIcon } from "@heroicons/vue/20/solid";
+import CreateFolderModal from "@/Components/app/CreateFolderModal.vue";
+import { ref } from "vue";
+
+const createFolderModal = ref(false);
+const showCreateFolderModal = () => {
+    createFolderModal.value = true;
+};
 </script>
 
 <template>
@@ -26,6 +32,7 @@ import { ChevronDownIcon } from "@heroicons/vue/20/solid";
                     <MenuItem v-slot="{ active }">
                         <a
                             href="#"
+                            @click="showCreateFolderModal"
                             :class="[
                                 active
                                     ? 'bg-gray-100 text-gray-900'
@@ -68,4 +75,5 @@ import { ChevronDownIcon } from "@heroicons/vue/20/solid";
             </MenuItems>
         </transition>
     </Menu>
+    <CreateFolderModal v-model="createFolderModal" />
 </template>
