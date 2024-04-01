@@ -37,7 +37,7 @@ function onShow() {
 </script>
 
 <template>
-    <Modal :show="modelValue" @show="onShow" @close="closeModal">
+    <Modal :show="modelValue" @show="onShow" @close="closeModal" max-width="sm">
         <div class="p-6">
             <h2 class="text-lg font-medium text-gray-900">Create New Folder</h2>
 
