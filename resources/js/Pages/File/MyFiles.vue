@@ -1,12 +1,46 @@
 <script setup>
-import { Link } from "@inertiajs/vue3";
+import { Link, router, usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { onMounted, ref } from "vue";
+const { get } = usePage();
+const page = usePage();
 
 const props = defineProps({
     files: Object,
     folder: Object,
     ancestors: Object,
 });
+const loadMoreIntersect = ref(null);
+const allFiles = ref({
+    data: props.files.data,
+    next: props.files.links.next,
+});
+
+onMounted(() => {
+    const observer = new IntersectionObserver((entries) =>
+        entries.forEach((entry) => entry.isIntersecting && loadMore(), {
+            rootMargin: "-150px 0px 0px 0px",
+        })
+    );
+    observer.observe(loadMoreIntersect.value);
+});
+
+function loadMore() {
+    if (allFiles.value.next === null) {
+        return;
+    }
+    fetch(allFiles.value.next, {
+        headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+        },
+    })
+        .then((response) => response.json())
+        .then((res) => {
+            allFiles.value.data = [...allFiles.value.data, ...res.data];
+            allFiles.value.next = res.links.next;
+        });
+}
 </script>
 
 <template>
@@ -93,7 +127,7 @@ const props = defineProps({
             </thead>
             <tbody>
                 <tr
-                    v-for="file of files.data"
+                    v-for="file of allFiles.data"
                     :key="file.id"
                     class="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100"
                 >
@@ -144,10 +178,11 @@ const props = defineProps({
             </tbody>
         </table>
         <div
-            v-if="!files.data.length"
+            v-if="!allFiles.data.length"
             class="py-8 text-center text-lg text-gray-400"
         >
             There is no data in this folder
         </div>
+        <div ref="loadMoreIntersect"></div>
     </AuthenticatedLayout>
 </template>
