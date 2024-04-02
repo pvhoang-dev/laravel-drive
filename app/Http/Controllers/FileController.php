@@ -20,6 +20,7 @@ class FileController extends Controller
         $files = FileResource::collection(
             File::query()
                 ->where('parent_id', '=', $folder->id)
+                ->where('created_by', '=', request()->user()->id)
                 ->orderBy('created_at', 'desc')
                 ->paginate(50)
         );
@@ -104,14 +105,17 @@ class FileController extends Controller
     }
 
     /**
-     * ${CARET}
-     *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
      */
     private function getRoot(): \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model
     {
-        $parent = File::query()->where('_lft', '=', 1)->firstOrFail();
+        // $parent = File::query()->where('_lft', '=', 1)->firstOrFail();
 
-        return $parent;
+        // return $parent;
+
+        return File::query()
+            ->whereIsRoot()
+            ->where('created_by', '=', request()->user()->id)
+            ->firstOrFail();
     }
 }
