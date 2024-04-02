@@ -20,23 +20,12 @@ const fileUploadForm = useForm({
 
 function onDragOver() {
     dragOver.value = true;
-    console.log("Over");
 }
+
 function onDragLeave() {
     dragOver.value = false;
 }
-function onDragStart() {
-    dragOver.value = true;
-    console.log("onDragStart");
-}
-function onDragEnter() {
-    dragOver.value = true;
-    console.log("onDragEnter");
-}
-function onDragEnd() {
-    dragOver.value = false;
-    console.log("onDragEnd");
-}
+
 function handleDrop(event) {
     dragOver.value = false;
     const files = event.dataTransfer.files;
@@ -52,10 +41,8 @@ function handleDrop(event) {
         <!-- Page Content -->
         <main
             @drop.prevent="handleDrop"
+            @dragover.prevent="onDragOver"
             @dragleave.prevent="onDragLeave"
-            @dragend.prevent="onDragEnd"
-            @dragstart.prevent="onDragStart"
-            @dragenter.prevent="onDragEnter"
             class="flex flex-col flex-1 px-4 overflow-hidden"
             :class="dragOver ? 'dropzone' : ''"
         >
