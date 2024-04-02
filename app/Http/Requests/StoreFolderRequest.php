@@ -18,7 +18,11 @@ class StoreFolderRequest extends FormRequest
     {
         $this->parent = File::where('id', $this->input('parent_id'))->first();
 
-        if ($this->parent && !$this->parent->isOwnedBy($this->user()->id)) {
+        if (
+            $this->parent
+            && !$this->parent->isRoot()
+            && !$this->parent->isOwnedBy($this->user()->id)
+        ) {
             return false;
         }
 
