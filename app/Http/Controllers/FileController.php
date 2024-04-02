@@ -31,11 +31,18 @@ class FileController extends Controller
                 ->paginate(50)
         );
 
+        $ancestors = FileResource::collection([...$folder->ancestors, $folder]);
+
         if ($folder) {
             $folder = new FileResource($folder);
         }
 
-        return Inertia::render('File/MyFiles', compact('files', 'folder'));
+        // return Inertia::render('File/MyFiles', compact('files', 'folder'));
+        return Inertia::render('File/MyFiles', [
+            'files' => $files,
+            'folder' => $folder,
+            'ancestors' => $ancestors,
+        ]);
     }
 
     public function sharedWithMe()
