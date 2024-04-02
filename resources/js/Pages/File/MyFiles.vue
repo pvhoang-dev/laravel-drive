@@ -51,7 +51,7 @@ const props = defineProps({
                         class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                     >
                         <Link
-                            :href="route('myFiles', { folder: file.slug })"
+                            :href="route('myFiles', { folder: file.path })"
                             class="flex items-center"
                         >
                             <span
