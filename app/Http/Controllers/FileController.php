@@ -11,15 +11,25 @@ use Inertia\Inertia;
 
 class FileController extends Controller
 {
-    public function myFiles()
+    public function myFiles(?File $folder)
     {
+        if (!$folder->id) {
+            $folder = null;
+        }
+
         $files = FileResource::collection(
-            File::query()->where('_lft', '>', 1)
+            File::query()
+                ->where('_lft', '>', $folder?->_lft ?: 1)
+                ->where('_rgt', '<', $folder?->_rgt ?: PHP_INT_MAX)
                 ->orderBy('created_at', 'desc')
                 ->paginate(50)
         );
 
-        return Inertia::render('File/MyFiles', compact('files'));
+        if ($folder) {
+            $folder = new FileResource($folder);
+        }
+
+        return Inertia::render('File/MyFiles', compact('files', 'folder'));
     }
 
     public function sharedWithMe()
