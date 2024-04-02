@@ -1,17 +1,23 @@
 <script setup>
 import { ref } from "vue";
-import { useForm, usePage } from "@inertiajs/vue3";
+import ApplicationLogo from "@/Components/ApplicationLogo.vue";
+import Dropdown from "@/Components/Dropdown.vue";
+import DropdownLink from "@/Components/DropdownLink.vue";
+import NavLink from "@/Components/NavLink.vue";
+import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
+import TextInput from "@/Components/TextInput.vue";
 import SearchForm from "@/Components/app/SearchForm.vue";
 import Navigation from "@/Components/app/Navigation.vue";
 import UserSettingsDropdown from "@/Components/app/UserSettingsDropdown.vue";
-window.addEventListener("dragover", null);
-window.addEventListener("drop", null);
+
 const page = usePage();
 const dragOver = ref(false);
 const fileUploadForm = useForm({
     files: [],
     parent_id: null,
 });
+
 function onDragOver() {
     dragOver.value = true;
     console.log("Over");
