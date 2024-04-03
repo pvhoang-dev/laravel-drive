@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\File;
 
 class FileResource extends JsonResource
 {
@@ -23,9 +24,9 @@ class FileResource extends JsonResource
             "parent_id" => $this->parent_id,
             "is_folder" => $this->is_folder,
             "mime" => $this->mime,
-            "size" => $this->size,
+            "size" => $this->get_file_size(),
             "path" => $this->path,
-            'owner' => $this->owner,
+            "owner" => $this->owner,
             "created_at" => $this->created_at->diffForHumans(),
             "updated_at" => $this->updated_at->diffForHumans(),
             "created_by" => $this->created_by,
