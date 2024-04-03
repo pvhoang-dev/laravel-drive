@@ -9,19 +9,28 @@ import { usePage } from "@inertiajs/vue3";
 import { nextTick, ref } from "vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 
+// Uses
 const page = usePage();
 
-const { modelValue } = defineProps({
-    modelValue: Boolean,
-});
-
-const emit = defineEmits(["update:modelValue"]);
-const folderNameInput = ref(null);
 const form = useForm({
     name: "",
     parent_id: null,
 });
 
+// Refs
+const folderNameInput = ref(null);
+
+// Props and emit
+const { modelValue } = defineProps({
+    modelValue: Boolean,
+});
+
+const emit = defineEmits(["update:modelValue"]);
+
+// Methods
+function onShow() {
+    nextTick(() => folderNameInput.value.focus());
+}
 const createFolder = () => {
     form.parent_id = page.props.folder?.id;
     form.post(route("folder.create"), {
@@ -31,15 +40,12 @@ const createFolder = () => {
         onFinish: () => form.reset(),
     });
 };
-
 const closeModal = () => {
     emit("update:modelValue", false);
     form.reset();
 };
 
-function onShow() {
-    nextTick(() => folderNameInput.value.focus());
-}
+// Hooks
 </script>
 
 <template>
