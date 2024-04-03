@@ -18,21 +18,12 @@ const allFiles = ref({
     next: props.files.links.next,
 });
 
-onUpdated(() => {
-    allFiles.value = {
-        data: props.files.data,
-        next: props.files.links.next,
-    };
-});
-
-onMounted(() => {
-    const observer = new IntersectionObserver((entries) =>
-        entries.forEach((entry) => entry.isIntersecting && loadMore(), {
-            rootMargin: "-250px 0px 0px 0px",
-        })
-    );
-    observer.observe(loadMoreIntersect.value);
-});
+function openFolder(file) {
+    if (!file.is_folder) {
+        return;
+    }
+    router.visit(route("myFiles", { folder: file.path }));
+}
 
 function loadMore() {
     if (allFiles.value.next === null) {
@@ -50,6 +41,22 @@ function loadMore() {
             allFiles.value.next = res.links.next;
         });
 }
+
+onUpdated(() => {
+    allFiles.value = {
+        data: props.files.data,
+        next: props.files.links.next,
+    };
+});
+
+onMounted(() => {
+    const observer = new IntersectionObserver((entries) =>
+        entries.forEach((entry) => entry.isIntersecting && loadMore(), {
+            rootMargin: "-250px 0px 0px 0px",
+        })
+    );
+    observer.observe(loadMoreIntersect.value);
+});
 </script>
 
 <template>
@@ -144,13 +151,14 @@ function loadMore() {
                         <td
                             class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
                         >
-                            <Link
-                                :href="route('myFiles', { folder: file.path })"
+                            <a
+                                href="#"
+                                @dblclick.prevent="openFolder(file)"
                                 class="flex items-center"
                             >
                                 <FileIcon :file="file" />
                                 {{ file.name }}
-                            </Link>
+                            </a>
                         </td>
                         <td
                             class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"
