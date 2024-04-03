@@ -7,8 +7,16 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreFolderRequest extends ParentIdBaseRequest
+class FilesActionRequest extends ParentIdBaseRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
+    public function authorize(): bool
+    {
+        return false;
+    }
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -16,10 +24,15 @@ class StoreFolderRequest extends ParentIdBaseRequest
      */
     public function rules(): array
     {
+        $user = $this->user();
+
         return array_merge(
             parent::rules(),
             [
-                'name' => 'required',
+                'all' => 'nullable|bool',
+                'ids.*' => Rule::exists('files', 'id')->where(function ($query) use ($user) {
+                    $query->where('created_by', $user->id);
+                }),
             ]
         );
     }

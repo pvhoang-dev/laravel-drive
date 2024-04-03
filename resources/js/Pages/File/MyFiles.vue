@@ -6,6 +6,7 @@ import FileIcon from "@/Components/app/FileIcon.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import ConfirmationDialog from "@/Components/ConfirmationDialog.vue";
 import DeleteFilesButton from "@/Components/app/DeleteFilesButton.vue";
+// import DownloadFilesButton from "@/Components/app/DownloadFilesButton.vue";
 
 // Uses
 const page = usePage();
@@ -87,6 +88,11 @@ function onSelectCheckboxChange(file) {
     }
 }
 
+function onDeleted() {
+    allSelected.value = false;
+    selected.value = {};
+}
+
 // Hooks
 onUpdated(() => {
     allFiles.value = {
@@ -160,9 +166,15 @@ onMounted(() => {
                 </li>
             </ol>
             <div class="inline-flex rounded-md shadow-sm" role="group">
+                <!-- <DownloadFilesButton
+                    :all="allSelected"
+                    :ids="selectedIds"
+                    class="mr-2"
+                /> -->
                 <DeleteFilesButton
                     :delete-all="allSelected"
                     :delete-ids="selectedIds"
+                    @deleted="onDeleted"
                 />
             </div>
         </nav>

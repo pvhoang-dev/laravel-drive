@@ -6,7 +6,7 @@ use App\Models\File;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Validation\Rule;
 
-class StoreFileRequest extends StoreFolderRequest
+class StoreFileRequest extends ParentIdBaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,14 +15,12 @@ class StoreFileRequest extends StoreFolderRequest
      */
     public function rules(): array
     {
-        return [
-            'files.*' => ['required', 'file'],
-            'folder_name' => ['string'],
-            'parent_id' => [
-                Rule::exists(File::class, 'id')->where(function (Builder $query) {
-                    return $query->where('is_folder', '=', 1);
-                }),
+        return array_merge(
+            parent::rules(),
+            [
+                'files.*' => ['required', 'file'],
+                'folder_name' => ['string'],
             ]
-        ];
+        );
     }
 }
