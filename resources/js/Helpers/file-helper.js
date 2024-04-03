@@ -1,5 +1,4 @@
 export function isImage(file) {
-    console.log(file);
     return /^image\/\w+$/.test(file.mime);
 }
 
