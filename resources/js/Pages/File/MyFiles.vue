@@ -1,7 +1,7 @@
 <script setup>
 import { Link, router, usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, onUpdated, ref, watch } from "vue";
 import FileIcon from "@/Components/app/FileIcon.vue";
 
 const { get } = usePage();
@@ -16,6 +16,13 @@ const loadMoreIntersect = ref(null);
 const allFiles = ref({
     data: props.files.data,
     next: props.files.links.next,
+});
+
+onUpdated(() => {
+    allFiles.value = {
+        data: props.files.data,
+        next: props.files.links.next,
+    };
 });
 
 onMounted(() => {
