@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Kalnoy\Nestedset\NodeTrait;
@@ -16,16 +17,6 @@ class File extends Model
 {
     use HasFactory, HasCreatorAndUpdater, NodeTrait, SoftDeletes;
 
-    protected $fillable = [
-        'name',
-        'slug',
-        'is_folder',
-        'mime',
-        'size',
-        'created_by',
-        'updated_by',
-    ];
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
@@ -33,14 +24,14 @@ class File extends Model
 
     public function parent(): BelongsTo
     {
-        return $this->belongsTo(File::class);
+        return $this->belongsTo(File::class, 'parent_id');
     }
 
     public function owner(): Attribute
     {
         return Attribute::make(
             get: function (mixed $value, array $attributes) {
-                return $attributes['created_by'] === request()->user()->id ? "me" : $this->user->name;
+                return $attributes['created_by'] == Auth::id() ? 'me' : $this->user->name;
             }
         );
     }
@@ -57,7 +48,8 @@ class File extends Model
 
     public function get_file_size()
     {
-        $units = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+
         $power = $this->size > 0 ? floor(log($this->size, 1024)) : 0;
 
         return number_format($this->size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
@@ -75,10 +67,10 @@ class File extends Model
             $model->path = (!$model->parent->isRoot() ? $model->parent->path . '/' : '') . Str::slug($model->name);
         });
 
-        static::deleted(function (File $model) {
-            if (!$model->is_folder) {
-                Storage::delete($model->storage_path);
-            }
-        });
+        // static::deleted(function (File $model) {
+        //     if (!$model->is_folder) {
+        //         Storage::delete($model->storage_path);
+        //     }
+        // });
     }
 }

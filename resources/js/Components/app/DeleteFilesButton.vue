@@ -43,19 +43,22 @@ function onDeleteCancel() {
 }
 function onDeleteConfirm() {
     console.log("Deleting ", page.props, props.deleteIds);
-    deleteFilesForm.parent_id = page.props.folder?.id;
+    deleteFilesForm.parent_id = page.props.folder.id;
     if (props.deleteAll) {
-        deleteFilesForm.all = props.deleteAll;
+        deleteFilesForm.all = true;
     } else {
         deleteFilesForm.ids = props.deleteIds;
     }
+
     deleteFilesForm.delete(route("file.delete"), {
         onSuccess: () => {
             showDeleteDialog.value = false;
-            emit("deleted");
-            showSuccessNotification("Files moved into trash");
+            emit("delete");
+            showSuccessNotification("Selected files have been deleted");
         },
     });
+
+    console.log("Delete", props.deleteAll, props.deleteIds);
 }
 
 // Hooks
@@ -88,5 +91,6 @@ function onDeleteConfirm() {
         message="Are you sure you want to delete selected files?"
         @cancel="onDeleteCancel"
         @confirm="onDeleteConfirm"
-    />
+    >
+    </ConfirmationDialog>
 </template>

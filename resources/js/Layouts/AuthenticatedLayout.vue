@@ -35,29 +35,30 @@ function onDragLeave() {
     dragOver.value = false;
 }
 
-function handleDrop(event) {
+function handleDrop(ev) {
     dragOver.value = false;
-    const files = event.dataTransfer.files;
+    const files = ev.dataTransfer.files;
     if (!files.length) {
         return;
     }
-    uploadFiles({ files });
+    uploadFiles(files);
 }
 
-function uploadFiles({ files }) {
-    fileUploadForm.parent_id = page.props.folder?.id;
+function uploadFiles(files) {
+    console.log(files);
+    fileUploadForm.parent_id = page.props.folder.id;
     fileUploadForm.files = files;
     fileUploadForm.relative_paths = [...files].map((f) => f.webkitRelativePath);
-    fileUploadForm.post(route("file.upload"), {
+    fileUploadForm.post(route("file.store"), {
         onSuccess: () => {
-            showSuccessNotification("Successfully uploaded");
+            showSuccessNotification(`${files.length} files have been uploaded`);
         },
         onError: (errors) => {
             let message = "";
             if (Object.keys(errors).length > 0) {
                 message = errors[Object.keys(errors)[0]];
             } else {
-                message = "Error during file upload. Please try again later";
+                message = "Error during file upload. Please try again later.";
             }
             showErrorDialog(message);
         },

@@ -7,7 +7,7 @@ const props = defineProps({
 <template>
     <div
         v-if="form.progress"
-        class="absolute border-gray-900 border right-8 bottom-4 bg-white p-3 shadow-lg rounded flex flex-col w-[240px]"
+        class="absolute border-gray-900 border right-8 bottom-4 bg-white shadow-lg rounded flex flex-col w-[240px] p-2"
     >
         <div class="text-xs mb-2">Uploading {{ form.files.length }} files</div>
         <div class="h-3 bg-gray-100 rounded-md">

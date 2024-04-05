@@ -7,9 +7,9 @@ import FileUploadMenuItem from "@/Components/app/FileUploadMenuItem.vue";
 import FolderUploadMenuItem from "@/Components/app/FolderUploadMenuItem.vue";
 
 const createFolderModal = ref(false);
-const showCreateFolderModal = () => {
+function showCreateFolderModal() {
     createFolderModal.value = true;
-};
+}
 </script>
 
 <template>
@@ -35,13 +35,8 @@ const showCreateFolderModal = () => {
                     <MenuItem v-slot="{ active }">
                         <a
                             href="#"
-                            @click="showCreateFolderModal"
-                            :class="[
-                                active
-                                    ? 'bg-gray-100 text-gray-900'
-                                    : 'text-gray-700',
-                                'block px-4 py-2 text-sm',
-                            ]"
+                            @click.prevent="showCreateFolderModal"
+                            class="text-gray-700 block px-4 py-2 text-sm"
                         >
                             New Folder
                         </a>
