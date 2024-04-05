@@ -31,7 +31,7 @@ class File extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function parent()
+    public function parent(): BelongsTo
     {
         return $this->belongsTo(File::class);
     }
@@ -50,7 +50,7 @@ class File extends Model
         return $this->created_by == $userId;
     }
 
-    public function isRoot(): bool
+    public function isRoot()
     {
         return $this->parent_id === null;
     }

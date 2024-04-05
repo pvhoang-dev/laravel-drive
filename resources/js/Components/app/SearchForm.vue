@@ -12,7 +12,7 @@ const form = useForm({
             type="text"
             class="block w-full mr-2"
             v-model="form.search"
-            autocomplete="search"
+            autocomplete
             placeholder="Search for files and folders"
         />
     </form>

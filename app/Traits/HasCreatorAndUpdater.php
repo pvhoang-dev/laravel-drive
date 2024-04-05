@@ -2,13 +2,6 @@
 
 namespace App\Traits;
 
-
-/**
- * Class HasCreatorAndUpdater
- *
- * @package App\Traits
- */
-
 use Illuminate\Support\Facades\Auth;
 
 trait HasCreatorAndUpdater

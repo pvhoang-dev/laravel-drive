@@ -11,7 +11,7 @@ const emit = defineEmits(["cancel", "confirm"]);
 </script>
 
 <template>
-    <Modal :show="show" @close="" max-width="md">
+    <Modal :show="show" max-width="md">
         <div class="p-6">
             <h2 class="text-2xl mb-2 font-semibold">Please Confirm</h2>
             <p>{{ message }}</p>

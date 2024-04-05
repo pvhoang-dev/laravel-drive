@@ -8,7 +8,7 @@ import {
     isWord,
     isVideo,
     isPDF,
-} from "../../Helpers/file-helper.js";
+} from "../../Helper/file-helper.js";
 
 const FILE_MIME_TO_ICON = {};
 const { file } = defineProps({
@@ -17,7 +17,7 @@ const { file } = defineProps({
 </script>
 
 <template>
-    <span class="w-8 h-8 px-1 inline-flex items-center justify-center mr-2">
+    <span class="w-6 h-6 inline-flex items-center justify-center mr-2">
         <svg
             v-if="file.is_folder"
             xmlns="http://www.w3.org/2000/svg"

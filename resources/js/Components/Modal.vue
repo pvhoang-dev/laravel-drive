@@ -16,8 +16,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(["close", "show", "hide"]);
-
+const emit = defineEmits(["show", "hide", "close"]);
 watch(
     () => props.show,
     () => {
@@ -62,14 +61,14 @@ const maxWidthClass = computed(() => {
 </script>
 
 <template>
-    <Teleport to="body">
-        <Transition leave-active-class="duration-200">
+    <teleport to="body">
+        <transition leave-active-class="duration-200">
             <div
                 v-show="show"
                 class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
                 scroll-region
             >
-                <Transition
+                <transition
                     enter-active-class="ease-out duration-300"
                     enter-from-class="opacity-0"
                     enter-to-class="opacity-100"
@@ -84,9 +83,9 @@ const maxWidthClass = computed(() => {
                     >
                         <div class="absolute inset-0 bg-gray-500 opacity-75" />
                     </div>
-                </Transition>
+                </transition>
 
-                <Transition
+                <transition
                     enter-active-class="ease-out duration-300"
                     enter-from-class="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                     enter-to-class="opacity-100 translate-y-0 sm:scale-100"
@@ -101,8 +100,8 @@ const maxWidthClass = computed(() => {
                     >
                         <slot v-if="show" />
                     </div>
-                </Transition>
+                </transition>
             </div>
-        </Transition>
-    </Teleport>
+        </transition>
+    </teleport>
 </template>

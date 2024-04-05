@@ -1,27 +1,32 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { useForm, usePage } from "@inertiajs/vue3";
-import SearchForm from "@/Components/app/SearchForm.vue";
+// Imports
 import Navigation from "@/Components/app/Navigation.vue";
+import SearchForm from "@/Components/app/SearchForm.vue";
 import UserSettingsDropdown from "@/Components/app/UserSettingsDropdown.vue";
-import ErrorDialog from "@/Components/ErrorDialog.vue";
+import { onMounted, ref } from "vue";
 import {
     emitter,
-    showErrorDialog,
     FILE_UPLOAD_STARTED,
+    showErrorDialog,
     showSuccessNotification,
 } from "@/event-bus.js";
-import FormProgress from "@/Components/FormProgress.vue";
+import { useForm, usePage } from "@inertiajs/vue3";
+import FormProgress from "@/Components/app/FormProgress.vue";
+import ErrorDialog from "@/Components/ErrorDialog.vue";
 import Notification from "@/Components/Notification.vue";
 
+// Uses
 const page = usePage();
-const dragOver = ref(false);
 const fileUploadForm = useForm({
     files: [],
     relative_paths: [],
     parent_id: null,
 });
 
+// Refs
+const dragOver = ref(false);
+
+// Methods
 function onDragOver() {
     dragOver.value = true;
 }
@@ -72,7 +77,6 @@ onMounted(() => {
 <template>
     <div class="h-screen bg-gray-50 flex w-full gap-4">
         <Navigation />
-        <!-- Page Content -->
         <main
             @drop.prevent="handleDrop"
             @dragover.prevent="onDragOver"
@@ -103,7 +107,7 @@ onMounted(() => {
     <Notification />
 </template>
 
-<style lang="css">
+<style scoped>
 .dropzone {
     width: 100%;
     height: 100%;
