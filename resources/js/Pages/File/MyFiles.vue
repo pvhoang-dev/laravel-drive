@@ -217,6 +217,7 @@ onMounted(() => {
                     <tr
                         v-for="file of allFiles.data"
                         :key="file.id"
+                        @dblclick.prevent="openFolder(file)"
                         class="border-b transition duration-300 ease-in-out hover:bg-blue-100"
                         :class="
                             selected[file.id] || allSelected
@@ -235,16 +236,10 @@ onMounted(() => {
                             />
                         </td>
                         <td
-                            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"
+                            class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 flex items-center"
                         >
-                            <a
-                                href="#"
-                                @dblclick.prevent="openFolder(file)"
-                                class="flex items-center"
-                            >
-                                <FileIcon :file="file" />
-                                {{ file.name }}
-                            </a>
+                            <FileIcon :file="file" />
+                            {{ file.name }}
                         </td>
                         <td
                             class="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap"

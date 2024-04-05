@@ -42,7 +42,6 @@ function download() {
         }
     }
     httpGet(route("file.download") + "?" + p.toString()).then((res) => {
-        console.log(res);
         if (!res.url) return;
         const a = document.createElement("a");
         a.download = res.filename;

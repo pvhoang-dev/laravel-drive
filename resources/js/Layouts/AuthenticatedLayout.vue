@@ -18,7 +18,7 @@ const page = usePage();
 const dragOver = ref(false);
 const fileUploadForm = useForm({
     files: [],
-    folder_name: "",
+    relative_paths: [],
     parent_id: null,
 });
 
@@ -39,12 +39,10 @@ function handleDrop(event) {
     uploadFiles({ files });
 }
 
-function uploadFiles({ files, folder_name = null }) {
+function uploadFiles({ files }) {
     fileUploadForm.parent_id = page.props.folder?.id;
-    if (folder_name) {
-        fileUploadForm.folder_name = folder_name;
-    }
     fileUploadForm.files = files;
+    fileUploadForm.relative_paths = [...files].map((f) => f.webkitRelativePath);
     fileUploadForm.post(route("file.upload"), {
         onSuccess: () => {
             showSuccessNotification("Successfully uploaded");

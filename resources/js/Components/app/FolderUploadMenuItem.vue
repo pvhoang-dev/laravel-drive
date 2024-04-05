@@ -8,7 +8,6 @@ const page = usePage();
 function onFileUploadChange(ev) {
     emitter.emit(FILE_UPLOAD_STARTED, {
         files: ev.target.files,
-        folder_name: ev.target.files[0].webkitRelativePath.split("/")[0],
     });
 }
 </script>
