@@ -218,7 +218,7 @@ onMounted(() => {
                         v-for="file of allFiles.data"
                         :key="file.id"
                         @dblclick.prevent="openFolder(file)"
-                        class="border-b transition duration-300 ease-in-out hover:bg-blue-100"
+                        class="border-b transition duration-300 ease-in-out hover:bg-blue-100 cursor-pointer"
                         :class="
                             selected[file.id] || allSelected
                                 ? 'bg-blue-50'
