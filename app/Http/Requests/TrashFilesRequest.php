@@ -26,7 +26,7 @@ class TrashFilesRequest extends FormRequest
         return [
             'all' => 'nullable|bool',
             'ids.*' => Rule::exists('files', 'id')->where(function ($query) {
-                $query->onlyTrashed()->where('created_by', Auth::id());
+                $query->whereNotNull('deleted_at')->where('created_by', Auth::id());
             })
         ];
     }
