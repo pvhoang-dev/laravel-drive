@@ -94,7 +94,7 @@ onMounted(() => {
 <template>
     <AuthenticatedLayout>
         <nav class="flex items-center justify-end p-1 mb-3">
-            <div>
+            <div class="flex">
                 <DeleteForeverButton
                     :all-selected="allSelected"
                     :selected-ids="selectedIds"
