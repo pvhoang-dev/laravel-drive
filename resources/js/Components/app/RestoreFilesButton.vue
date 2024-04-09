@@ -28,7 +28,7 @@ const props = defineProps({
 const emit = defineEmits(["restore"]);
 // Computed
 // Methods
-function onButtonClick() {
+function onClick() {
     if (!props.allSelected && !props.selectedIds.length) {
         showErrorDialog("Please select at least one file to restore");
         return;
@@ -57,7 +57,7 @@ function onConfirm() {
 
 <template>
     <button
-        @click="onButtonClick"
+        @click="onClick"
         class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white"
     >
         <svg
@@ -71,7 +71,7 @@ function onConfirm() {
             <path
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75"
+                d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
             />
         </svg>
         Restore

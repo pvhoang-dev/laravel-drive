@@ -25,9 +25,10 @@ const props = defineProps({
         required: false,
     },
 });
+const emit = defineEmits(["delete"]);
 // Computed
 // Methods
-function onButtonClick() {
+function onClick() {
     if (!props.allSelected && !props.selectedIds.length) {
         showErrorDialog("Please select at least one file to delete");
         return;
@@ -40,15 +41,15 @@ function onCancel() {
 function onConfirm() {
     if (props.allSelected) {
         form.all = true;
+        form.ids = [];
     } else {
         form.ids = props.selectedIds;
     }
     form.delete(route("file.deleteForever"), {
         onSuccess: () => {
             showConfirmationDialog.value = false;
-            showSuccessNotification(
-                "Selected files have been deleted permanently"
-            );
+            emit("delete");
+            showSuccessNotification("Selected files have been deleted forever");
         },
     });
 }
@@ -57,7 +58,7 @@ function onConfirm() {
 
 <template>
     <button
-        @click="onButtonClick"
+        @click="onClick"
         class="inline-flex items-center px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white mr-3"
     >
         <svg
@@ -79,7 +80,7 @@ function onConfirm() {
 
     <ConfirmationDialog
         :show="showConfirmationDialog"
-        message="Are you sure you want to delete selected files forever. This can't be undone?"
+        message="Are you sure you want to delete selected files?"
         @cancel="onCancel"
         @confirm="onConfirm"
     >
