@@ -8,6 +8,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { nextTick, ref } from "vue";
+import { showSuccessNotification } from "@/event-bus.js";
 
 // Uses
 const form = useForm({
@@ -30,18 +31,23 @@ const emit = defineEmits(["update:modelValue"]);
 function onShow() {
     nextTick(() => folderNameInput.value.focus());
 }
+
 function createFolder() {
     form.parent_id = page.props.folder.id;
+    const name = form.name;
     form.post(route("folder.create"), {
         preserveScroll: true,
         onSuccess: () => {
             closeModal();
             form.reset();
             // Show success notification
+            showSuccessNotification(`The folder "${name}" was created`);
+            form.reset();
         },
         onError: () => folderNameInput.value.focus(),
     });
 }
+
 function closeModal() {
     emit("update:modelValue");
     form.clearErrors();
