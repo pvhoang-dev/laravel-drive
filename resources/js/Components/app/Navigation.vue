@@ -22,25 +22,25 @@ import NavLink from "@/Components/NavLink.vue";
             <div class="py-3">
                 <NavLink
                     :href="route('myFiles')"
-                    :active="$page.url === '/my-files'"
+                    :active="$page.props.route_name === 'myFiles'"
                 >
                     My Files
                 </NavLink>
                 <NavLink
                     :href="route('file.sharedWithMe')"
-                    :active="$page.url === '/shared-with-me'"
+                    :active="$page.props.route_name === 'file.sharedWithMe'"
                 >
                     Shared with me
                 </NavLink>
                 <NavLink
                     :href="route('file.sharedByMe')"
-                    :active="$page.url === '/shared-by-me'"
+                    :active="$page.props.route_name === 'file.sharedByMe'"
                 >
                     Shared by me
                 </NavLink>
                 <NavLink
                     :href="route('trash')"
-                    :active="$page.url === '/trash'"
+                    :active="$page.props.route_name === 'trash'"
                 >
                     Trash
                 </NavLink>
