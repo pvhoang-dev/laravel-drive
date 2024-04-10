@@ -12,8 +12,8 @@ class TestController extends Controller
     public function index()
     {
         dd(Storage::allFiles());
-        dd(Storage::put('test.txt', 'Hello, S3!'));
         dd(Storage::disk('s3'));
+        dd(Storage::put('test.txt', 'Hello, S3!'));
         dd(Storage::disk('s3')->get('Lab2.docx'));
 
         //        $path = $request->file('file')->store("public/images");
