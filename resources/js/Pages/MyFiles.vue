@@ -47,6 +47,15 @@ const selectedIds = computed(() =>
 // Methods
 function openFolder(file) {
     if (!file.is_folder) {
+        httpGet(route("openFile", { file: file }))
+            .then(data => {
+                if (data.url) {
+                    window.open(data.url, '_blank');
+                } else {
+                    console.error('File does not exist or error accessing file');
+                }
+            })
+            .catch(error => console.error('Error fetching file URL:', error));
         return;
     }
     router.visit(route("myFiles", { folder: file.path }));

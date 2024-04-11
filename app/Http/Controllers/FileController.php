@@ -15,6 +15,7 @@ use App\Models\File;
 use App\Models\FileShare;
 use App\Models\StarredFile;
 use App\Models\User;
+use Aws\S3\Exception\S3Exception;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -541,5 +542,23 @@ class FileController extends Controller
         }
 
         return [$url, $filename];
+    }
+
+    public function openFile(Request $request)
+    {
+        $file = $request->get('file');
+        $path = $file['storage_path'];
+
+        try {
+            if (Storage::has($path)) {
+                $url = Storage::temporaryUrl($path, now()->addMinutes(10));
+
+                return response()->json(['url' => $url]);
+            } else {
+                return response()->json(['message' => 'File does not exist.'], 404);
+            }
+        } catch (S3Exception $e) {
+            return response()->json(['message' => 'Error accessing S3'], 500);
+        }
     }
 }

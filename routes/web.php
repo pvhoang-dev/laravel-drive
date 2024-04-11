@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TestController;
 use Illuminate\Foundation\Application;
@@ -27,7 +28,11 @@ Route::get('/', function () {
 //    ]);
 });
 
-Route::controller(\App\Http\Controllers\FileController::class)
+// TODO: Demo open file in AWS
+Route::get('/openFile', [FileController::class, 'openFile'])->name('openFile');
+
+
+Route::controller(FileController::class)
     ->middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/my-files/{folder?}', 'myFiles')
