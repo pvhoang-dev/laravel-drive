@@ -164,7 +164,7 @@ onMounted(() => {
                     <Link
                         v-if="!ans.parent_id"
                         :href="route('myFiles')"
-                        class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white"
+                        class="inline-flex items-center text-sm font-semibold text-gray-700 hover:text-gray-700 dark:text-gray-400"
                     >
                         <HomeIcon class="w-4 h-4" />
                         My Files
@@ -185,7 +185,7 @@ onMounted(() => {
                         </svg>
                         <Link
                             :href="route('myFiles', { folder: ans.path })"
-                            class="ml-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ml-2 dark:text-gray-400 dark:hover:text-white"
+                            class="ml-1 text-sm font-semibold text-gray-700 hover:text-gray-700 md:ml-2 dark:text-gray-400"
                         >
                             {{ ans.name }}
                         </Link>
