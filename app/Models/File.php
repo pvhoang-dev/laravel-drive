@@ -95,6 +95,7 @@ class File extends Model
                 $this->deleteFilesFromStorage($file->children);
             } else {
                 Storage::delete($file->storage_path);
+                Storage::disk('local')->delete($file->storage_path);
             }
         }
     }
